@@ -3,8 +3,15 @@ import React from "react";
 // STYLES
 import { Wrapper, Content, Text } from "./HeroImage.styles";
 
-const HeroImage = (prop) => {
-      <Wrapper image={prop.image} />
-}
+const HeroImage = ({ image, title, text }) => (
+  <Wrapper image={image}>
+    <Content>
+      <Text>
+        <h1>{title}</h1>
+        <p>{text}</p>
+      </Text>
+    </Content>
+  </Wrapper>
+);
 
-export default HeroImage
+export default HeroImage;
