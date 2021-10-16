@@ -18,12 +18,21 @@ import NoImage from '../images/no_image.jpg';
 import Button from './Button';
 
 const Home = () => {
-  const { state, loading, error, searchTerm, setSearchTerm } = useHomeFetch();
+  const {
+    state,
+    loading,
+    error,
+    searchTerm,
+    setSearchTerm,
+    setIsLoadingMore
+  } = useHomeFetch();
 
   console.log('state:', state);
 
+  if (error) return <div>Something went wrong...</div>
+
   return (
-    <React.Fragment>
+    <>
       {!searchTerm && state.results[0] ?
         <HeroImage
           image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.results[0].backdrop_path}`}
@@ -48,9 +57,9 @@ const Home = () => {
       </Grid>
       {loading && <Spinner />}
       {state.page < state.total_pages && !loading && (
-        <Button text='Load More' />
+        <Button text='Load More' callback={() => setIsLoadingMore(true)} />
       )}
-    </React.Fragment>
+    </>
   )
 }
 
