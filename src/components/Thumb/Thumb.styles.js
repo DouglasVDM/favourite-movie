@@ -1,15 +1,23 @@
 import styled from "styled-components";
 
 export const Image = styled.img`
-  max-width: var(--maxWidth);
-  margin: 0 auto;  
-  padding: 0 20px;
+  width: 100%;
+  max-width: 720px;
+  transition: all 0.3s;
+  object-fit: cover;
+  border-radius: 20px;
+  animation: animateThumb 0.5s;
 
-  h1 {
-    color: var(--medGrey);
+  :hover {
+    opacity: 0.8;
+  }
 
-    @media screen and (max-width: 768px) {
-      font-size: var(--fontBig);
+  @keyframes animateThumb {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 `;
