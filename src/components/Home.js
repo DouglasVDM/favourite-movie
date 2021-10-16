@@ -15,6 +15,7 @@ import SearchBar from './SearchBar';
 
 // IMAGE
 import NoImage from '../images/no_image.jpg';
+import Button from './Button';
 
 const Home = () => {
   const { state, loading, error, searchTerm, setSearchTerm } = useHomeFetch();
@@ -45,7 +46,10 @@ const Home = () => {
           />
         ))}
       </Grid>
-      <Spinner />
+      {loading && <Spinner />}
+      {state.page < state.total_pages && !loading && (
+        <Button text='Load More' />
+      )}
     </React.Fragment>
   )
 }
