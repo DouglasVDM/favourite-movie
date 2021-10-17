@@ -4,6 +4,8 @@ import React from 'react';
 import { IMAGE_BASE_URL, POSTER_SIZE } from '../config';
 
 // COMPONENTS
+import Grid from './Grid';
+import Spinner from './Spinner';
 
 // HOOK
 
