@@ -8,19 +8,14 @@ export const useMovieFetch = (movieId) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  console.log('state:', state);
-
-  // 
   const fetchMovie = useCallback(async () => {
     try {
       setLoading(true);
       setError(false);
 
       const movie = await API.fetchMovie(movieId);
-      console.log('movie:', movie)
 
       const credits = await API.fetchCredits(movieId);
-      console.log('credits:', credits)
 
       // GET DIRECTORS ONLY
       const directors = credits.crew.filter(
@@ -35,7 +30,6 @@ export const useMovieFetch = (movieId) => {
 
       setLoading(false)
     } catch (error) {
-      console.error(error.message)
       setError(true);
     }
   }, [movieId]);

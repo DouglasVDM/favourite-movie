@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { isPersistedState } from "../helpers";
+
 // API
 import API from '../API';
 
@@ -17,15 +19,12 @@ export const useHomeFetch = () => {
   const [error, setError] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  console.log('searchTerm:', searchTerm);
-
   const fetchMovies = async (page, searchTerm = '') => {
     try {
       setError(false);
       setLoading(true);
 
       const movies = await API.fetchMovies(searchTerm, page);
-      console.log('movies:', movies)
 
       setState(previousState => ({
         ...movies,
@@ -33,7 +32,6 @@ export const useHomeFetch = () => {
           page > 1 ? [...previousState.results, ...movies.results] : [...movies.results]
       }));
     } catch (error) {
-      console.error(error.message)
       setError(true);
     }
     setLoading(false)
@@ -41,6 +39,16 @@ export const useHomeFetch = () => {
 
   // INITIAL RENDER AND SEARCH
   useEffect(() => {
+    if (!searchTerm) {
+      const sessionState = isPersistedState('homeState');
+      
+      if (sessionState) {
+        console.log('Grabbing from sessionStorage')
+        setState(sessionState);
+        return;
+      }
+    }
+    console.log('Grabbing from API')
     setState(initialState)
     fetchMovies(1, searchTerm)
   }, [searchTerm]);
@@ -54,5 +62,10 @@ export const useHomeFetch = () => {
 
   }, [isLoadingMore, searchTerm, state.page])
 
+  // WRITE TO SESSION STORAGE
+  useEffect(() => {
+    if (!searchTerm) sessionStorage.setItem('homeState', JSON.stringify(state))
+  }, [searchTerm, state]);
+
   return { state, loading, error, searchTerm, setSearchTerm, isLoadingMore, setIsLoadingMore };
-}
+};
