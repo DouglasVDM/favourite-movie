@@ -1,7 +1,7 @@
 import React from 'react';
 
 // ROUTING
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // COMPONENTS
 import Header from './components/Header';
